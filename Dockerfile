@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iputils-ping \
     net-tools \
     python3-pip \
+    cv2 \
     python3-colcon-common-extensions \
     ros-humble-rmw-cyclonedds-cpp \
     ros-humble-geometry-msgs \
