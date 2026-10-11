@@ -26,7 +26,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # High timeout (1000s) and retries (20) prevent network dropouts on slow Jetson connections
 RUN pip3 install --default-timeout=1000 --retries=20 --ignore-installed "numpy<2" "scipy" "opencv-python-headless<4.11" "pyyaml"
 RUN pip3 install --default-timeout=1000 --retries=20 --ignore-installed torch torchvision --index-url https://download.pytorch.org/whl/cpu
-RUN pip3 install --default-timeout=1000 --retries=20 --ignore-installed ultralytics
+# Install ultralytics with --no-deps so it doesn't trigger redownloading the huge 450MB standard PyTorch package
+RUN pip3 install --default-timeout=1000 --retries=20 --ignore-installed matplotlib psutil tqdm py-cpuinfo && \
+    pip3 install --default-timeout=1000 --retries=20 --no-deps ultralytics
 
 # 3. Setup workspace directory
 WORKDIR /combined_ws
