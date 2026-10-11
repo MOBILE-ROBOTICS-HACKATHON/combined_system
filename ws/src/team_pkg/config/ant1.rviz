@@ -1,0 +1,151 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid (1 m)
+      Enabled: true
+      Reference Frame: <Fixed Frame>
+      Cell Size: 1
+      Plane Cell Count: 20
+      Color: 160; 160; 164
+      Value: true
+    - Class: rviz_default_plugins/Map
+      Name: Map (SLAM)
+      Enabled: true
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/map
+        Reliability Policy: Reliable
+        Durability Policy: Transient Local
+        Depth: 1
+      Color Scheme: map
+      Alpha: 0.8
+      Draw Behind: true
+      Value: true
+    - Class: rviz_default_plugins/Map
+      Name: Local costmap (obstacles + clearance)
+      Enabled: true
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/local_costmap/costmap
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+        Depth: 1
+      Color Scheme: costmap
+      Alpha: 0.5
+      Value: true
+    - Class: rviz_default_plugins/Path
+      Name: Planned path (global)
+      Enabled: true
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/plan
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+        Depth: 5
+      Color: 25; 255; 0
+      Line Style: Billboards
+      Line Width: 0.03
+      Value: true
+    - Class: rviz_default_plugins/Polygon
+      Name: Robot footprint
+      Enabled: true
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/local_costmap/published_footprint
+        Reliability Policy: Reliable
+        Durability Policy: Volatile
+        Depth: 5
+      Color: 255; 255; 0
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF (robot frames)
+      Enabled: true
+      Show Arrows: false
+      Show Axes: true
+      Show Names: false
+      Marker Scale: 0.6
+      Value: true
+    - Class: rviz_default_plugins/Odometry
+      Name: Odometry trail
+      Enabled: true
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/odom
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        Depth: 10
+      Keep: 300
+      Position Tolerance: 0.05
+      Angle Tolerance: 0.1
+      Shape:
+        Value: Arrow
+        Color: 255; 25; 0
+        Alpha: 1
+        Shaft Length: 0.3
+        Shaft Radius: 0.02
+        Head Length: 0.08
+        Head Radius: 0.05
+      Covariance:
+        Value: false
+      Value: true
+    - Class: rviz_default_plugins/LaserScan
+      Name: Lidar (fused 360)
+      Enabled: true
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/scan
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        Depth: 5
+      Style: Flat Squares
+      Size (m): 0.03
+      Color Transformer: FlatColor
+      Color: 0; 200; 255
+      Decay Time: 0
+      Value: true
+    - Class: rviz_default_plugins/LaserScan
+      Name: Lidar front-left raw (intensity)
+      Enabled: false
+      Topic:
+        Value: /olive/olixRobot/ant1/id001/scan_fl
+        Reliability Policy: Best Effort
+        Durability Policy: Volatile
+        Depth: 5
+      Style: Flat Squares
+      Size (m): 0.03
+      Color Transformer: Intensity
+      Use rainbow: true
+      Value: false
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: olive_olixRobot_ant1_id001_odom
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Top down (follows robot)
+      Target Frame: olive_olixRobot_ant1_id001_base_link
+      Scale: 80
+      Angle: 0
+      X: 0
+      Y: 0
+      Near Clip Distance: 0.01
+Window Geometry:
+  Width: 1200
+  Height: 800
+  Displays:
+    collapsed: false
+  Views:
+    collapsed: true

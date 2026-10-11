@@ -1,0 +1,54 @@
+# crazyswarm2 config for OUR TWO Crazyflies (cf1 + cf2). Used when you `CF_DRONES=2 source scripts/cf_env.sh`.
+# One-drone config: crazyflies.yaml. Every enabled drone must be ON and reachable, or cf_server won't start.
+# Assumes a Flow deck v2 (optical flow + height) for position: positions are relative to the
+# TAKEOFF point (x forward, y left, z up). Without a positioning deck the drone can't hold position.
+fileversion: 3
+
+robots:
+  cf1:
+    enabled: true
+    uri: radio://0/70/2M/E7E7E7E702   # OUR drone (found 10 Oct by switching it off: it vanished from the scan). E7E7E7E704 = another team
+    initial_position: [0.0, 0.0, 0.0]
+    type: cf21_flow
+  cf2:
+    enabled: true
+    # SECOND drone: put ITS address here (find it with cf_identify, see docs/09). Same channel (70) and
+    # datarate as cf1 = one Crazyradio serves both efficiently. E7E7E7E704 is ANOTHER TEAM's drone.
+    uri: radio://0/70/2M/E7E7E7E703
+    initial_position: [0.0, 0.0, 0.0]
+    type: cf21_flow
+
+robot_types:
+  cf21_flow:
+    motion_capture:
+      tracking: "none"                # no motion-capture system: the drone estimates its own position
+    big_quad: false
+    battery:
+      voltage_warning: 3.8  # V
+      voltage_critical: 3.7 # V
+
+all:
+  firmware_logging:
+    enabled: true
+    default_topics:
+      pose:                 # -> /cf1/pose (geometry_msgs/PoseStamped) + TF world -> cf1
+        frequency: 10 # Hz
+      status:               # -> /cf1/status (battery, radio link quality, flying/tumbled/locked); cf_guard needs it
+        frequency: 2 # Hz
+      odom:                 # -> /cfN/odom (nav_msgs/Odometry): the position trail in rviz
+        frequency: 5 # Hz   (two drones share one radio: keep the logging light)
+  firmware_params:
+    commander:
+      enHighLevel: 1        # takeoff / land / go_to
+    stabilizer:
+      estimator: 2          # Kalman (needed for the Flow deck)
+      controller: 1         # PID (Mellinger needs motion-capture accuracy)
+    posCtlPid:              # SLOW FOR NOW: the position controller never commands more than this (firmware
+      xyVelMax: 0.3         # default 1.0 m/s); a safety net under the 0.15 m/s our tools ask for
+      zVelMax: 0.3
+    kalman:
+      resetEstimation: 1    # position = (0,0,0) where it is at connect -> connect with the drone at the takeoff spot
+  reference_frame: "world"
+  broadcasts:
+    num_repeats: 15
+    delay_between_repeats_ms: 1

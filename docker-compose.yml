@@ -1,0 +1,39 @@
+services:
+  # Service 1: ANT1 Hardware Bridge Node (subscribes to cmd_vel_input and drives robot at /olive/olixRobot/ant1/id001/cmd_vel)
+  ant1_robot_bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ant1_robot_bridge
+    network_mode: host
+    ipc: host
+    privileged: true
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    command: >
+      bash -c "source /opt/ros/humble/setup.bash &&
+               source /combined_ws/install/setup.bash &&
+               ros2 run team_pkg ant1_bridge"
+    restart: unless-stopped
+
+  # Service 2: Rescue Robot Brain Node (CV/YOLO/EKF -> predicts coordinates and publishes to cmd_vel_input)
+  rescue_brain:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rescue_brain
+    network_mode: host
+    ipc: host
+    privileged: true
+    environment:
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - PYTHONUNBUFFERED=1
+    command: >
+      bash -c "source /opt/ros/humble/setup.bash &&
+               source /combined_ws/install/setup.bash &&
+               python3 /combined_ws/brain_node.py --ros-args -p camera_source:=auto -p stream_url:=http://10.164.99.122:8080/"
+    depends_on:
+      - ant1_robot_bridge
+    restart: unless-stopped

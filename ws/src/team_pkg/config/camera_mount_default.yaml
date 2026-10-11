@@ -1,0 +1,9 @@
+# Where the D555 sits on the ANT: TAPE-MEASURE starting values (vision_calib refines them into
+# /hackathon/data/camera_mount.yaml, which wins over this file). Body frame of the ANT: origin = ANT centre
+# ON THE FLOOR, x = forward, y = left, z = up. Angles of the camera (x forward, y left, z up), in degrees.
+x: 0.25          # m in front of the ANT centre (measure to the camera's front glass centre)
+y: 0.0           # m to the left
+z: 0.30          # m above the FLOOR (ANT top plate ~0.15 m + bracket)
+roll_deg: 0.0
+pitch_deg: -15.0 # NEGATIVE = tilted UP (plan: ~15 deg up to see drones hovering 0.5-1 m high)
+yaw_deg: 0.0     # + = turned to the left

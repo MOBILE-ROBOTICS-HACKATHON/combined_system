@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>team_pkg</name>
+  <version>0.0.1</version>
+  <description>Team package for the Mobile Robotics Hackathon: put your nodes + launch files here.</description>
+  <maintainer email="you@example.com">hacker</maintainer>
+  <license>MIT</license>
+  <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>action_msgs</depend>
+  <depend>rcl_interfaces</depend>
+  <depend>tf2_ros</depend>
+  <depend>nav2_msgs</depend>
+  <export><build_type>ament_python</build_type></export>
+</package>
