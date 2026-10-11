@@ -23,9 +23,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Python ML / CV dependencies (RescueRobotBrain requirements)
-RUN pip3 install --no-cache-dir --ignore-installed "numpy<2" scipy opencv-python-headless pyyaml && \
-    pip3 install --no-cache-dir --ignore-installed torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
-    pip3 install --no-cache-dir --ignore-installed ultralytics
+# Timeout and retries prevent network dropouts/timeouts during large PyTorch downloads on Jetson
+RUN pip3 install --timeout 300 --retries 10 --ignore-installed "numpy<2" scipy opencv-python-headless pyyaml
+RUN pip3 install --timeout 300 --retries 10 --ignore-installed torch torchvision --index-url https://download.pytorch.org/whl/cpu
+RUN pip3 install --timeout 300 --retries 10 --ignore-installed ultralytics
 
 # 3. Setup workspace directory
 WORKDIR /combined_ws
